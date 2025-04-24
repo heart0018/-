@@ -23,6 +23,10 @@ end
   def play_round
     #各プレイヤーがカードを一枚出す
     table = @players.map{|player|[player,player.draw]}
+
+    table.each do |player, card|
+      puts "#{@players.name}は#{@card}を出した"
+    end
     #一番強い値のカードを探す
     max_value = table.map{|_,card| card.value}.max
     #一番強いカードを持つプレイヤーを探す
@@ -41,7 +45,7 @@ end
 
   def game_over?
   alive_players = @players.reject { |player| player.hand.empty? }
-  alive_players.size <= 1
+  alive_players.size <= 5
   end
 
   def show_result
