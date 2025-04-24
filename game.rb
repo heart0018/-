@@ -22,11 +22,13 @@ end
 
   def play_round
     #各プレイヤーがカードを一枚出す
-    table = @players.map{|player|[player,player.draw]}
+     table = @players.map do |player|
+    card = player.draw
+    puts "#{player.name} の手札: #{player.hand.size}枚 → 出したカード: #{card.to_s}"
+    [player, card]
+  end
 
-    table.each do |player, card|
-      puts "#{@players.name}は#{@card}を出した"
-    end
+
     #一番強い値のカードを探す
     max_value = table.map{|_,card| card.value}.max
     #一番強いカードを持つプレイヤーを探す
@@ -36,7 +38,7 @@ end
       winner = winners.first[0]
       puts "#{winner.name}の勝利！"
       #場にあるカードを取得
-      winner.receive(table.map {|_,card| card})
+      winner.receive(table.map {|_,card| card}.shuffle)
     else
       puts "引き分け！"
       #後で書く
@@ -45,7 +47,7 @@ end
 
   def game_over?
   alive_players = @players.reject { |player| player.hand.empty? }
-  alive_players.size <= 5
+  alive_players.size <= 1
   end
 
   def show_result
