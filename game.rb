@@ -28,6 +28,15 @@ end
     [player, card]
   end
 
+    #誰かが0枚になったら、ゲーム終了
+  empty_players = table.select{|_,card| card.nil?}.map{|player, _| player.name}
+  unless empty_players.empty?
+    puts "カードが0枚にプレイヤーがいるため、ゲーム終了"
+    empty_players.each{|name| puts "#{name}が敗北"}
+    show_result
+    exit
+  end
+
 
     #一番強い値のカードを探す
     max_value = table.map{|_,card| card.value}.max
@@ -41,7 +50,6 @@ end
       winner.receive(table.map {|_,card| card}.shuffle)
     else
       puts "引き分け！"
-      #後で書く
     end
   end
 
