@@ -11,9 +11,6 @@ def initialize(player_names)
   @deck.deal(@players)
 end
   def game_start
-    puts "ゲームスタート！"
-    puts "カードが配られました！"
-    puts "戦争!"
     until game_over?
       play_round
     end
@@ -42,6 +39,17 @@ end
     max_value = table.map{|_,card| card.value}.max
     #一番強いカードを持つプレイヤーを探す
     winners = table.select{|_,card| card.value == max_value}
+
+    #Aが複数枚出た場合スペードのAがある？
+    if winners.size >= 2
+      spade_a = winners.find{|_,card| card.suit == "♠" && card.rank == "A"}
+      if spade_a
+        winners = spade_a[0]
+        puts "#{winners.name}がスペードA『世界一』で勝利！"
+        winners.receive(table.map {|_,card| card}.shuffle)
+        return
+      end
+    end
 
     if winners.size == 1
       winner = winners.first[0]

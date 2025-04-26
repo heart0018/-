@@ -14,6 +14,8 @@ class Deck
         @cards << Card.new(suit, rank)
       end
     end
+    #Jokerを追加
+    @cards << Card.new("Joker", "Joker")
   end
   def shuffle
     @cards.shuffle!
