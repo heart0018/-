@@ -4,7 +4,7 @@ attr_reader :suit, :rank, :value
 def initialize(suit,rank)
   @suit = suit
   @rank = rank
-  @value  = value_rank(rank)
+  @value  = value_rank(suit,rank)
 end
 
 def to_s
@@ -16,9 +16,9 @@ def to_s
 end
 
 private #内部処理
-def value_rank(rank)
+def value_rank(suit,rank)
   if suit == "Joker"
-    15 #ジョーカーは最強
+    return 15 #ジョーカーは最強
   end
   #カードの値を数値に変換する
   case rank
